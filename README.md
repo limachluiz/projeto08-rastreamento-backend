@@ -1,4 +1,5 @@
-# INDT - Rastreamento de Produção por
+# INDT - Rastreamento de Produção por Lote
+
 # 📦 LotePIM - Backend (Projeto 08)
 
 ## 💻 Sobre o Projeto
