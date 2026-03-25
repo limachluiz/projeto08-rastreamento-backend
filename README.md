@@ -1,47 +1,47 @@
 # 📦 LotePIM - Backend (Projeto 08)
 
 ## 💻 Sobre o Projeto
-[cite_start]O LotePIM é um sistema web para registro e rastreamento de lotes de produção industrial[cite: 122]. [cite_start]Ele foi concebido com foco nas demandas do Polo Industrial de Manaus, onde a rastreabilidade é uma exigência legal e contratual[cite: 7, 120]. 
+O LotePIM é um sistema web para registro e rastreamento de lotes de produção industrial. Ele foi concebido com foco nas demandas do Polo Industrial de Manaus, onde a rastreabilidade é uma exigência legal e contratual. 
 
-[cite_start]Este repositório contém a API backend responsável por digitalizar o processo de produção: registro de cada lote com data, turno, operador e quantidade[cite: 11]. [cite_start]O grande valor do sistema é permitir a consulta de rastreabilidade rápida em casos de recall, evitando o descarte desnecessário de lotes inteiros[cite: 9, 10, 125].
+Este repositório contém a API backend responsável por digitalizar o processo de produção: registro de cada lote com data, turno, operador e quantidade. O grande valor do sistema é permitir a consulta de rastreabilidade rápida em casos de recall, evitando o descarte desnecessário de lotes inteiros.
 
 ## 🛠️ Stack Tecnológica
-De acordo com o escopo do projeto, a fundação técnica utiliza:
-* [cite_start]**Linguagem / Runtime:** Node.js 22[cite: 121].
-* [cite_start]**Framework:** Express[cite: 17, 90].
-* [cite_start]**Banco de Dados:** PostgreSQL[cite: 17, 91].
-* [cite_start]**Autenticação:** JSON Web Token (JWT)[cite: 97, 140].
+* **Linguagem / Runtime:** Node.js 22
+* **Framework:** Express
+* **Banco de Dados:** PostgreSQL
+* **Autenticação:** JSON Web Token (JWT)
 
 ## 🚀 Funcionalidades Principais
-* [cite_start]**Autenticação de Usuários:** Autenticação por e-mail e senha com geração de token JWT contendo ID e perfil do usuário[cite: 140].
-* [cite_start]**Gestão de Lotes:** Abertura de lotes com geração automática de um número único (ex: LOT-2025-00001)[cite: 140].
-* [cite_start]**Controle de Insumos:** Funcionalidade que permite vincular múltiplos insumos a um lote específico, informando nome, código, lote do insumo e quantidade[cite: 140].
-* [cite_start]**Inspeção de Qualidade:** Endpoints para registrar o resultado da inspeção de um lote, o que atualiza automaticamente o seu status (em_producao, aguardando_inspecao, aprovado, aprovado_restricao, reprovado)[cite: 140, 148].
-* [cite_start]**Motor de Rastreabilidade:** Consultas completas de rastreabilidade, permitindo buscar um lote para ver seus insumos ou fazer a rastreabilidade reversa (buscar um insumo e listar todos os lotes que o utilizaram)[cite: 140].
+* **Autenticação de Usuários:** Login por e-mail e senha com geração de token JWT.
+* **Gestão de Lotes:** Abertura e encerramento de lotes com geração automática de numeração (ex: LOT-2025-00001).
+* **Controle de Insumos:** Vínculo de múltiplos insumos a um lote específico, registrando nome, código e quantidade.
+* **Inspeção de Qualidade:** Registro do resultado da inspeção, atualizando o status do lote automaticamente (aprovado, reprovado, etc.).
+* **Rastreabilidade (Track & Trace):** Consultas detalhadas para listar os insumos de um lote ou realizar a busca reversa (quais lotes usaram determinado insumo).
 
-## 🗄️ Estrutura de Banco de Dados
-[cite_start]O sistema é construído sobre quatro entidades principais[cite: 32]:
-* [cite_start]**produto:** Representa o item que é fabricado na linha de produção[cite: 32, 36].
-* [cite_start]**lote:** Representa a unidade de produção rastreável, gerada em uma sessão contínua[cite: 33, 41].
-* [cite_start]**insumo_lote:** Entidade central para a rastreabilidade, vinculando os insumos utilizados a um lote específico[cite: 33, 44, 45].
-* **inspecao:** Registra o resultado de qualidade e define o status final do lote[cite: 34, 49, 50].
+## 🗄️ Entidades do Banco de Dados
+O sistema gerencia quatro entidades principais:
+* **produto:** O item fabricado na linha de produção.
+* **lote:** A unidade de produção rastreável.
+* **insumo_lote:** A tabela que vincula os insumos utilizados a um lote específico.
+* **inspecao_lote:** O registro do resultado de qualidade que define o status final do lote.
 
-## 🏁 Pré-requisitos e Execução
-* [cite_start]Node.js v22 instalado localmente[cite: 121].
-* [cite_start]PostgreSQL rodando localmente ou via container[cite: 17].
+## 🏁 Como Rodar a Aplicação
+
+Pré-requisitos: Node.js v22 e PostgreSQL instalados.
 
 ```bash
 # Clone o repositório
 $ git clone [https://github.com/SEU_USUARIO/projeto08-backend.git](https://github.com/SEU_USUARIO/projeto08-backend.git)
+$ cd projeto08-backend
 
 # Instale as dependências
 $ npm install
 
-# Configure as variáveis de ambiente baseadas no .env.example
-# [cite_start]As variáveis sensíveis devem ficar no .env, fora do controle de versão[cite: 143].
+# Configure as variáveis de ambiente baseadas no arquivo de exemplo
+$ cp .env.example .env
 
-# [cite_start]Execute as migrations/seed do banco (3 produtos, 2 usuários, 5 lotes) [cite: 91]
-$ npm run seed # (exemplo de script)
+# Execute a criação do banco e o seed inicial (3 produtos, 2 usuários, 5 lotes)
+$ npm run seed
 
 # Inicie o servidor
-[cite_start]$ node server.js # [cite: 93]
+$ npm run dev
