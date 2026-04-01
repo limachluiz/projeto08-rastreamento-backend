@@ -8,6 +8,7 @@ import { Produto } from "../entities/Produto";
 import { Usuario } from "../entities/Usuario";
 import { Status } from "../types/Status";
 import { Turno } from "../types/Turno";
+import { AppError } from "../errors/AppError";
 
 export class LoteService {
   private loteRepository = appDataSource.getRepository(Lote);
@@ -41,11 +42,11 @@ export class LoteService {
     });
 
     if (!produto) {
-      throw new Error("Produto não encontrado.");
+      throw new AppError("Produto não encontrado.", 404);
     }
 
     if (!produto.ativo) {
-      throw new Error("Produto inativo não pode gerar novo lote.");
+      throw new AppError("Produto inativo não pode gerar novo lote.", 404);
     }
 
     const operador = await this.usuarioRepository.findOne({
@@ -53,16 +54,16 @@ export class LoteService {
     });
 
     if (!operador) {
-      throw new Error("Operador não encontrado.");
+      throw new AppError("Operador não encontrado.", 404);
     }
 
     const turnoValido = Object.values(Turno).includes(data.turno as Turno);
     if (!turnoValido) {
-      throw new Error("Turno inválido.");
+      throw new AppError("Turno inválido.");
     }
 
     if (data.quantidadeProd <= 0) {
-      throw new Error("A quantidade produzida deve ser maior que zero.");
+      throw new AppError("A quantidade produzida deve ser maior que zero.");
     }
 
     const numeroLote = await this.gerarNumeroLote(data.dataProducao);
@@ -129,7 +130,7 @@ export class LoteService {
     });
 
     if (!lote) {
-      throw new Error("Lote não encontrado.");
+      throw new AppError("Lote não encontrado.", 404);
     }
 
     return lote;
@@ -144,7 +145,7 @@ export class LoteService {
     });
 
     if (!lote) {
-      throw new Error("Lote não encontrado.");
+      throw new AppError("Lote não encontrado.", 404);
     }
 
     const statusNovo = data.status as Status;

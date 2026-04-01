@@ -1,15 +1,15 @@
-import 'dotenv/config';
-import 'reflect-metadata';
-import express from 'express';
-import { appDataSource } from './database/appDataSource.js';
-import { routes } from './routes/index.js';
+import "dotenv/config";
+import express from "express";
+import { appDataSource } from "./database/appDataSource";
+import { routes } from "./routes";
+import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { notFoundMiddleware } from "./middlewares/notFoundMiddleware";
 
 const app = express();
-const PORT = process.env.PORT ?? 3000;
+const PORT = Number(process.env.PORT ?? 3000);
 
 app.use(express.json());
 
-// Rota de teste para confirmar que o servidor está funcionando
 app.get("/health", (_req, res) => {
   return res.status(200).json({
     status: "ok",
@@ -19,6 +19,8 @@ app.get("/health", (_req, res) => {
 });
 
 app.use(routes);
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
 
 appDataSource
   .initialize()

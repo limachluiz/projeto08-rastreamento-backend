@@ -2,6 +2,7 @@ import { appDataSource } from "../database/appDataSource";
 import { Produto } from "../entities/Produto";
 import { CreateProdutoDTO } from "../dtos/CreateProdutoDTO";
 import { UpdateProdutoDTO } from "../dtos/UpdateProdutoDTO";
+import { AppError } from "../errors/AppError";
 
 export class ProdutoService {
   private produtoRepository = appDataSource.getRepository(Produto);
@@ -12,7 +13,7 @@ export class ProdutoService {
     });
 
     if (produtoExistente) {
-      throw new Error("Já existe um produto com este código.");
+      throw new AppError("Já existe um produto com este código.", 404);
     }
 
     const produto = this.produtoRepository.create({
@@ -59,7 +60,7 @@ export class ProdutoService {
       });
 
       if (codigoEmUso) {
-        throw new Error("Já existe um produto com este código.");
+        throw new AppError("Já existe um produto com este código.", 409);
       }
     }
 
@@ -79,7 +80,7 @@ export class ProdutoService {
     });
 
     if (!produto) {
-      throw new Error("Produto não encontrado.");
+      throw new AppError("Produto não encontrado.", 404);
     }
 
     produto.ativo = false;

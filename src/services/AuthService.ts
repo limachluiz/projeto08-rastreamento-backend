@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { appDataSource } from "../database/appDataSource";
 import { Usuario } from "../entities/Usuario";
 import { LoginDTO } from "../dtos/LoginDTO";
+import { AppError } from "../errors/AppError";
 
 export class AuthService {
   private usuarioRepository = appDataSource.getRepository(Usuario);
@@ -13,13 +14,13 @@ export class AuthService {
     });
 
     if (!usuario) {
-      throw new Error("E-mail ou senha inválidos.");
+      throw new AppError("E-mail ou senha inválidos.", 400);
     }
 
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
     if (!senhaValida) {
-      throw new Error("E-mail ou senha inválidos.");
+      throw new AppError("E-mail ou senha inválidos.", 400);
     }
 
     const accessToken = jwt.sign(
