@@ -6,6 +6,7 @@ import { Usuario } from "../entities/Usuario";
 import { Perfil } from "../types/Perfil";
 import { ResultadoInspecao } from "../types/ResultadoInspecao";
 import { Status } from "../types/Status";
+import { AppError } from "../errors/AppError";
 
 export class InspecaoService {
   private inspecaoRepository = appDataSource.getRepository(InspecaoLote);
@@ -21,15 +22,15 @@ export class InspecaoService {
     });
 
     if (!lote) {
-      throw new Error("Lote não encontrado.");
+      throw new AppError("Lote não encontrado.", 404);
     }
 
     if (lote.inspecao) {
-      throw new Error("Este lote já possui inspeção registrada.");
+      throw new AppError("Este lote já possui inspeção registrada.", 409);
     }
 
     if (lote.status !== Status.AGUARDANDO_INSPECAO) {
-      throw new Error("Somente lotes aguardando inspeção podem ser inspecionados.");
+      throw new AppError("Somente lotes aguardando inspeção podem ser inspecionados.");
     }
 
     const inspetor = await this.usuarioRepository.findOne({
@@ -37,11 +38,11 @@ export class InspecaoService {
     });
 
     if (!inspetor) {
-      throw new Error("Inspetor não encontrado.");
+      throw new AppError("Inspetor não encontrado.", 404);
     }
 
     if (![Perfil.INSPETOR, Perfil.GESTOR].includes(inspetor.perfil)) {
-      throw new Error("Usuário sem permissão para registrar inspeção.");
+      throw new AppError("Usuário sem permissão para registrar inspeção.");
     }
 
     const resultadoValido = Object.values(ResultadoInspecao).includes(
@@ -49,20 +50,20 @@ export class InspecaoService {
     );
 
     if (!resultadoValido) {
-      throw new Error("Resultado de inspeção inválido.");
+      throw new AppError("Resultado de inspeção inválido.");
     }
 
     const quantidadeRepr = Number(data.quantidadeRepr ?? 0);
 
     if (quantidadeRepr < 0) {
-      throw new Error("A quantidade reprovada não pode ser negativa.");
+      throw new AppError("A quantidade reprovada não pode ser negativa.");
     }
 
     if (
       data.resultado !== ResultadoInspecao.APROVADO &&
       !data.descricaoDesvio?.trim()
     ) {
-      throw new Error(
+      throw new AppError(
         "A descrição do desvio é obrigatória quando a inspeção não for aprovada."
       );
     }
