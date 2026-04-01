@@ -1,0 +1,41 @@
+{
+  "name": "projeto08-rastreamento-backend",
+  "version": "1.0.0",
+  "description": "O LotePIM é um sistema web para registro e rastreamento de lotes de produção industrial. Ele foi concebido com foco nas demandas do Polo Industrial de Manaus, onde a rastreabilidade é uma exigência legal e contratual.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "npx tsc",
+    "start": "node dist/server.js",
+    "seed": "tsx src/database/seeds/seed.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28",
+    "typescript": "^6.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizhlima/projeto08-rastreamento-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/luizhlima/projeto08-rastreamento-backend/issues"
+  },
+  "homepage": "https://github.com/luizhlima/projeto08-rastreamento-backend#readme",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0"
+  }
+}
