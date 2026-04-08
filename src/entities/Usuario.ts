@@ -34,6 +34,9 @@ export class Usuario {
   @Column({ type: "boolean", default: true })
   ativo!: boolean;
 
+  @Column({ name: "refresh_token_hash", type: "text", nullable: true })
+  refreshTokenHash!: string | null;
+
   @CreateDateColumn({ name: "created_at", type: "timestamptz" })
   createdAt!: Date;
 
