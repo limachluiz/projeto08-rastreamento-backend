@@ -6,6 +6,7 @@ interface TokenPayload {
   sub: string;
   email: string;
   perfil: Perfil;
+  type: "access" | "refresh";
 }
 
 export function authMiddleware(
@@ -34,6 +35,12 @@ export function authMiddleware(
       token,
       process.env.JWT_ACCESS_SECRET as string
     ) as TokenPayload;
+
+    if (decoded.type !== "access") {
+      return response.status(401).json({
+        message: "Tipo de token inválido.",
+      });
+    }
 
     request.user = {
       id: Number(decoded.sub),
