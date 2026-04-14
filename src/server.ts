@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import { appDataSource } from "./database/appDataSource";
 import { routes } from "./routes";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
@@ -7,6 +8,14 @@ import { notFoundMiddleware } from "./middlewares/notFoundMiddleware";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 3000);
+
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 
