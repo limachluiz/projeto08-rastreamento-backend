@@ -32,7 +32,7 @@ async function runSeed() {
 
   const operador = usuarioRepository.create({
     nome: "Operador Teste",
-    email: "operador@lotepim.com",
+    email: "operador@iande.com",
     senha: senhaHash,
     perfil: Perfil.OPERADOR,
     ativo: true,
@@ -40,7 +40,7 @@ async function runSeed() {
 
   const inspetor = usuarioRepository.create({
     nome: "Inspetor Teste",
-    email: "inspetor@lotepim.com",
+    email: "inspetor@iande.com",
     senha: senhaHash,
     perfil: Perfil.INSPETOR,
     ativo: true,
@@ -48,7 +48,7 @@ async function runSeed() {
 
   const gestor = usuarioRepository.create({
     nome: "Gestor Teste",
-    email: "gestor@lotepim.com",
+    email: "gestor@iande.com",
     senha: senhaHash,
     perfil: Perfil.GESTOR,
     ativo: true,
@@ -154,9 +154,9 @@ async function runSeed() {
 
   console.log("Seed executado com sucesso.");
   console.log("Usuários criados:");
-  console.log("operador@lotepim.com / 123456");
-  console.log("inspetor@lotepim.com / 123456");
-  console.log("gestor@lotepim.com / 123456");
+  console.log("operador@iande.com / 123456");
+  console.log("inspetor@iande.com / 123456");
+  console.log("gestor@iande.com / 123456");
 
   await appDataSource.destroy();
 }
