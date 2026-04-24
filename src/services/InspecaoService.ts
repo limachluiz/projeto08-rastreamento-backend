@@ -26,7 +26,7 @@ export class InspecaoService {
     }
 
     if (lote.inspecao) {
-      throw new AppError("Este lote já possui inspeção registrada.", 409);
+      await this.inspecaoRepository.remove(lote.inspecao);
     }
 
     if (lote.status !== Status.AGUARDANDO_INSPECAO) {

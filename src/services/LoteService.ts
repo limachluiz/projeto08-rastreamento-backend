@@ -158,7 +158,7 @@ export class LoteService {
         Status.REPROVADO,
       ],
       [Status.APROVADO]: [],
-      [Status.APROVADO_RESTRICAO]: [],
+      [Status.APROVADO_RESTRICAO]: [Status.AGUARDANDO_INSPECAO],
       [Status.REPROVADO]: [],
     };
 

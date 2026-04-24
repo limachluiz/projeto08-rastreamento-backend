@@ -6,6 +6,7 @@ import { inspecaoRoutes } from "./inspecao.routes";
 import { dashboardRoutes } from "./dashboard.routes";
 import { insumoLoteRoutes } from "./insumo-lote.routes";
 import { rastreabilidadeRoutes } from "./rastreabilidade.routes";
+import usuarioRoutes from "./usuario.routes";
 
 const routes = Router();
 
@@ -16,5 +17,6 @@ routes.use(inspecaoRoutes);
 routes.use("/dashboard", dashboardRoutes);
 routes.use(insumoLoteRoutes);
 routes.use(rastreabilidadeRoutes);
+routes.use("/usuarios", usuarioRoutes);
 
 export { routes };
